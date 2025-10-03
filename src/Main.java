@@ -1,4 +1,5 @@
 
+import Builder.ComputadoraBuilder;
 import Decorator.Cafe;
 import Decorator.CafeSimpe;
 import Decorator.ChocolateDecorator;
@@ -32,9 +33,9 @@ public class Main {
             System.out.println("2. Observable");
             System.out.println("3. Factory");
             System.out.println("4. Decorator");
-            System.out.println("5. Salir");
+            System.out.println("5. Builder");
 
-
+            System.out.print("Seleccion una opcion: " + " ");
             Scanner sc = new Scanner(System.in);
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -47,9 +48,8 @@ public class Main {
                 case 4:
                     patronDecorator(sc);
                 case 5:
-                    System.out.println("Saliendo....");
-                    break;
-                default:
+                    patronBuilder(sc);
+                case 6:
                     System.out.println("Saliendo....");
                     break;
 
@@ -57,6 +57,69 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Error ingrese un numero");
             menu();
+        }
+
+    }
+
+    private static void patronBuilder(Scanner sc) {
+        String procesador = "";
+        int ram = 0;
+        String alamacenamiento = "";
+        String grafica = "";
+        boolean wifi = false;
+        String wifi2 = "";
+        String sistemaOperativo;
+        String agregarComponentes;
+
+        System.out.println("Patron BUILDER");
+
+        System.out.println("Por favor selecciones los componentes de su computadora");
+        try {
+            System.out.print("Procesador: ");
+            procesador = sc.next();
+
+            System.out.print("RAM: ");
+            ram = sc.nextInt();
+            if (ram > 128) {
+                System.out.println("RAM: Invalida");
+                patronBuilder(sc);
+            }
+
+            System.out.print("ALMACENAMIENTO: ");
+            alamacenamiento = sc.next();
+
+            System.out.print("DESEA AGREGAR MAS COMPONENTES Y/N: ");
+            agregarComponentes = sc.next();
+
+            if (agregarComponentes.equals("y")) {
+                System.out.print("Grafica: ");
+                grafica = sc.next();
+
+                System.out.print("WIFI Y/N: ");
+                wifi2 = sc.next();
+
+                System.out.print("Sistema Operativo: ");
+                sistemaOperativo = sc.next();
+
+                if (wifi2.equals("y")) wifi = true;
+                ComputadoraBuilder computadoraBuilder = new ComputadoraBuilder.Builder(
+                        procesador,
+                        ram,
+                        alamacenamiento)
+                        .conTarjetaGrafica(grafica)
+                        .conWifi(wifi)
+                        .conSistemaOperativo(sistemaOperativo)
+                        .build();
+                System.out.println(computadoraBuilder.toString());
+                menu();
+            }
+            ComputadoraBuilder computadoraBuilder = new ComputadoraBuilder.Builder(procesador, ram, alamacenamiento).build();
+            System.out.println(computadoraBuilder.toString());
+            menu();
+
+        } catch (Exception e){
+            System.out.println("Por favor ingrese un caracter valido");
+            patronBuilder(sc);
         }
 
     }
