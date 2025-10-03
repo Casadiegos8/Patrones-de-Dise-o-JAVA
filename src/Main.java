@@ -49,6 +49,9 @@ public class Main {
                 case 5:
                     System.out.println("Saliendo....");
                     break;
+                default:
+                    System.out.println("Saliendo....");
+                    break;
 
             }
         } catch (Exception e) {
